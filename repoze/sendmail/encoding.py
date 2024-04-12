@@ -109,7 +109,10 @@ def best_charset(text):
 
     Prefers `ascii` or `iso-8859-1` and falls back to `utf-8`.
     """
-    encoded = text
+    if isinstance(text, tuple) and len(text) == 3:
+        charset, language, encoded = text
+        return charset, encoded
+
     for charset in 'ascii', 'iso-8859-1', 'utf-8':
         try:
             encoded = text.encode(charset)
