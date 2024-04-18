@@ -1,8 +1,6 @@
-from email import utils
-from email import header
+from email import header, utils
 
-from repoze.sendmail._compat import PY_2
-from repoze.sendmail._compat import text_type
+from repoze.sendmail._compat import PY_2, text_type
 
 # From http://tools.ietf.org/html/rfc5322#section-3.6
 ADDR_HEADERS = ('resent-from',
@@ -22,7 +20,7 @@ PARAM_HEADERS = ('content-type',
 
 
 def cleanup_message(message,
-                   addr_headers=ADDR_HEADERS, param_headers=PARAM_HEADERS):
+                    addr_headers=ADDR_HEADERS, param_headers=PARAM_HEADERS):
     """
     Cleanup a `Message` handling header and payload charsets.
 
@@ -46,8 +44,7 @@ def cleanup_message(message,
                 best, encoded = best_charset(name)
                 if PY_2:
                     name = encoded
-                name = header.Header(
-                    name, charset=best, header_name=key).encode()
+                name = header.Header(name, charset=best, header_name=key).encode()
                 addrs.append(utils.formataddr((name, addr)))
             value = ', '.join(addrs)
             message.replace_header(key, value)
@@ -66,7 +63,7 @@ def cleanup_message(message,
             if PY_2:
                 value = encoded
             value = header.Header(
-                value, charset=best, header_name=key).encode()
+                    value, charset=best, header_name=key).encode()
             message.replace_header(key, value)
 
     payload = message.get_payload()
@@ -99,7 +96,7 @@ def encode_message(message,
 
     The return is a byte string of the whole message.
     """
-    cleanup_message(message)
+    # cleanup_message(message)
     return message.as_string().encode('ascii')
 
 

@@ -201,7 +201,7 @@ class AbstractMailDelivery(object):
     def send(self, fromaddr, toaddrs, message):
         if not isinstance(message, Message):
             raise ValueError('Message must be email.message.Message')
-        encoding.cleanup_message(message)
+        # encoding.cleanup_message(message)
         messageid = message['Message-Id']
         if messageid is None:
             messageid = message['Message-Id'] = make_msgid('repoze.sendmail')
